@@ -3,38 +3,34 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <malloc.h>
+
+int mod(int* s, int m)
+{
+    int mod = s[m];
+    if (s[m] < 0)
+    {
+        mod = s[m] * (-1);
+    }
+    return mod;
+}
 int find_min(int* s, int N)
 {
-    int i = 0, min;
+    int i, min;
+    int k;
     min = s[0];
-    for(i = 0;i < N; i++)
-        if (mod_el(s, i) < mod_min(min, i))
+    for(i = 0, k = 0; i < N; i++)
+        if (mod(s, i) < mod(s, k))
         {
             min = s[i];
+            k = i;
         }
-    return min;
-}
-int mod_el(int* s, int i)
-{
-    if (s[i] < 0)
-    {
-        s[i] = s[i] * (-1);
-    }
-    return s[i];
-}
-int mod_min(int min, int i)
-{
-    if (min < 0)
-    {
-        min = min * (-1);
-    }
     return min;
 }
 
 int 
 main()
 {
-    int min_number = 0, i = 0, N;
+    int min_number = 0, i = 0, N, k;
     int* s;
     printf("Input count element of array: ");
     if (scanf("%d", &N) != 1 || N <= 0)
@@ -42,14 +38,17 @@ main()
         return printf("Incorrect input.");
     }
     s = (int*)malloc(N * sizeof(int));
+    if (s == NULL)
+    {
+        return -1;
+    }
     for (i = 0; i < N; i++)
     {
         printf("%d element: ", i);
-        if (scanf("%d", &s[i]) != 1)
-        {
-           return printf("Incorrect input.");
-        }
-        
+            if (scanf("%d", &s[i]) != 1)
+            {
+                return printf("Incorrect input.");
+            }   
     }
         min_number = find_min(s, N);
         printf("Result: %d", min_number);
