@@ -2,35 +2,27 @@
 //≈сли числа по модулю равны, выводитс€ элемент массива с наименьшим номером.
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 
-int mod(int* s, int m)
+int mod(int s)
 {
-    int mod = s[m];
-    if (s[m] < 0)
-    {
-        mod = s[m] * (-1);
-    }
-    return mod;
+    return s < 0 ? -s : s;
 }
 int find_min(int* s, int N)
 {
-    int i, min;
-    int k;
+    int i, min, k;
     min = s[0];
-    for(i = 0, k = 0; i < N; i++)
-        if (mod(s, i) < mod(s, k))
+    for (i = 0, k = 0; i < N; i++)
+        if (mod(s[i]) < mod(s[k]))
         {
             min = s[i];
             k = i;
         }
     return min;
 }
-
-int 
-main()
+int main()
 {
-    int min_number = 0, i = 0, N, k;
+    int min_number = 0, i = 0, N;
     int* s;
     printf("Input count element of array: ");
     if (scanf("%d", &N) != 1 || N <= 0)
